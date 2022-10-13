@@ -2,10 +2,12 @@ package com.secondhandmarket.spring.entidades;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Producto {
 	
 	@Id@GeneratedValue
