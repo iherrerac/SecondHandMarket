@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,6 +30,8 @@ public class Compra {
 	
 	@ManyToOne //Asociacion con el usuario propietario de esta compra
 	@Column(nullable = false)
+	@NotNull
+	@Valid
 	private Usuario propietario;
 	
 	public Compra() {}

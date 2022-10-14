@@ -7,21 +7,39 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Producto {
 	
 	@Id@GeneratedValue
 	private long id;
+	
 	@Column(nullable = false)
+	@NotBlank(message = "Nombre requerido")
+	@Size(min = 2, max = 25)
 	private String nombre;
+	
 	@Column(nullable = false)
+	@NotEmpty(message = "Precio requerido") //Para numeros
+	@Digits(integer= 12, fraction=2)
 	private float precio;
+	
 	@Column(nullable = true)
+	@NotNull
+	@NotBlank(message = "Introduce URL imagen")//Para cadenas, ingnora espacios en blanco al final
+	@Size(min = 10, max = 100)
 	private String imagen;
 	
 	@ManyToOne //Todo producto tendra un usuario
 	@Column(nullable = false)
+	@NotNull
+	@Valid
 	private Usuario propietario;
 	
 	@ManyToOne // Un producto podra estar comprado mediante una compra

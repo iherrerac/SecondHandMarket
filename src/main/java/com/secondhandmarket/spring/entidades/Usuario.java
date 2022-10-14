@@ -10,6 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,19 +27,38 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Usuario {
 	@Id@GeneratedValue
 	private long id;
+	
 	@Column(nullable = false)
+	@NotNull
+	@NotBlank(message = "Nombre requerido")
+	@Size(min = 2, max = 25)
 	private String nombre;
+	
 	@Column(nullable = false)
+	@NotNull
+	@NotBlank(message = "Apellidos requerido")
+	@Size(min = 3, max = 50)
 	private String apellidos;
+	
 	@Column(nullable = true)
 	private String avatar;
+	
 	@Column(nullable = false)
+	@NotNull
+	@NotBlank(message = "Introduce un email")
+	@Size(min = 2, max = 30)
+	@Email
 	private String email;
+	
 	@Column(nullable = false)
+	@NotNull
+	@NotBlank(message = "Password requerido.")
+	@Size(min = 8, max = 25)
+	@Pattern(regexp="^[a-zA-Z0-9]{3}",message="La longitud de la ocntraseña debe ser minimo 3. Se pemiten mayusculas, minusculas y numeros")
 	private String password;
 	
 	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP) //Anotacion precisa em BD, fecha y hora
+	@Temporal(TemporalType.TIMESTAMP) //Anotacion precisa en BD, fecha y hora
 	private Date fechaAlta;
 
 	public Usuario() {}
