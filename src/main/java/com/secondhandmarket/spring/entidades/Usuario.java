@@ -46,7 +46,6 @@ public class Usuario {
 	@Column(nullable = false)
 	@NotNull
 	@NotBlank(message = "Introduce un email")
-	@Size(min = 2, max = 30)
 	@Email
 	private String email;
 	
@@ -54,7 +53,7 @@ public class Usuario {
 	@NotNull
 	@NotBlank(message = "Password requerido.")
 	@Size(min = 8, max = 25)
-	@Pattern(regexp="^[a-zA-Z0-9]{3}",message="La longitud de la ocntraseña debe ser minimo 3. Se pemiten mayusculas, minusculas y numeros")
+	@Pattern(regexp="^[a-zA-Z0-9]{8,25}",message="La longitud de la contraseña debe ser minimo 3. Se pemiten mayusculas, minusculas y numeros")
 	private String password;
 	
 	@CreatedDate
@@ -63,7 +62,7 @@ public class Usuario {
 
 	public Usuario() {}
 
-	public Usuario(String nombre, String apellidos, String avatar, String email, String password, Date fechaAlta) {
+	public Usuario(String nombre, String apellidos, String avatar, String email, String password) {
 		super();
 		this.nombre = nombre;
 		this.apellidos = apellidos;

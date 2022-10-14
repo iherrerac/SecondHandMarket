@@ -10,10 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 @Entity
 public class Producto {
@@ -27,14 +29,13 @@ public class Producto {
 	private String nombre;
 	
 	@Column(nullable = false)
-	@NotEmpty(message = "Precio requerido") //Para numeros
+	@NotNull( message = "Precio requerido") 
+	@Min (1)
 	@Digits(integer= 12, fraction=2)
 	private float precio;
 	
 	@Column(nullable = true)
-	@NotNull
-	@NotBlank(message = "Introduce URL imagen")//Para cadenas, ingnora espacios en blanco al final
-	@Size(min = 10, max = 100)
+	//@NotBlank(message = "Introduce URL imagen")//Para cadenas, ingnora espacios en blanco al final
 	private String imagen;
 	
 	@ManyToOne //Todo producto tendra un usuario
