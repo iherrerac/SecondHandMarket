@@ -29,9 +29,10 @@ public class Compra {
 	@ManyToOne //Asociacion con el usuario propietario de esta compra
 	@Column(nullable = false)
 	private Usuario propietario;
-
+	
+	public Compra() {}
+	
 	public Compra(Usuario propietario) {
-		super();
 		this.propietario = propietario;
 	}
 

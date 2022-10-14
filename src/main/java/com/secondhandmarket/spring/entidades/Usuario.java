@@ -46,7 +46,6 @@ public class Usuario {
 		this.avatar = avatar;
 		this.email = email;
 		this.password = password;
-		this.fechaAlta = fechaAlta;
 	}
 
 	public long getId() {
