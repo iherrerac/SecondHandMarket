@@ -43,7 +43,7 @@ public class Producto {
 	private Usuario propietario;
 	
 	@ManyToOne // Un producto podra estar comprado mediante una compra
-	@Column(nullable = true)
+	@JoinColumn(nullable = true)
 	private Compra compra;
 	
 	public Producto () {}
