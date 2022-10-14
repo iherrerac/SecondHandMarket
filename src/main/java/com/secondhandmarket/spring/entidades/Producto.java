@@ -38,13 +38,14 @@ public class Producto {
 	private String imagen;
 	
 	@ManyToOne //Todo producto tendra un usuario
-	@Column(nullable = false)
+	@JoinColumn(nullable = false)
 	@NotNull
 	@Valid
 	private Usuario propietario;
 	
 	@ManyToOne // Un producto podra estar comprado mediante una compra
 	@JoinColumn(nullable = true)
+	@Valid
 	private Compra compra;
 	
 	public Producto () {}
