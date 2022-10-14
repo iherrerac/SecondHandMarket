@@ -3,6 +3,7 @@ package com.secondhandmarket.spring.entidades;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class Compra {
 	private Date fechaCompra;
 	
 	@ManyToOne //Asociacion con el usuario propietario de esta compra
+	@Column(nullable = false)
 	private Usuario propietario;
 
 	public Compra(Usuario propietario) {

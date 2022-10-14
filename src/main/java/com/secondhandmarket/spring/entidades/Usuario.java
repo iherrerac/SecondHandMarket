@@ -3,6 +3,7 @@ package com.secondhandmarket.spring.entidades;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -21,11 +22,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Usuario {
 	@Id@GeneratedValue
 	private long id;
-	
+	@Column(nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private String apellidos;
+	@Column(nullable = true)
 	private String avatar;
+	@Column(nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String password;
 	
 	@CreatedDate

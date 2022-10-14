@@ -2,6 +2,7 @@ package com.secondhandmarket.spring.entidades;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,15 +13,19 @@ public class Producto {
 	
 	@Id@GeneratedValue
 	private long id;
-	
+	@Column(nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private float precio;
+	@Column(nullable = true)
 	private String imagen;
 	
 	@ManyToOne //Todo producto tendra un usuario
+	@Column(nullable = false)
 	private Usuario propietario;
 	
 	@ManyToOne // Un producto podra estar comprado mediante una compra
+	@Column(nullable = true)
 	private Compra compra;
 	
 	public Producto () {}
