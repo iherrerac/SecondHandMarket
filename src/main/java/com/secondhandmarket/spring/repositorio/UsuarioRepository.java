@@ -7,6 +7,6 @@ import com.secondhandmarket.spring.entidades.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	
 	//Encontrar un usuario por email, deberia ser único
-	Usuario findByEmail(String email);
+	Usuario findFirstByEmail(String email);
 
 }
