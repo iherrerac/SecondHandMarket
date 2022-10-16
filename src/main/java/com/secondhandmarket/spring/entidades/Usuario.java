@@ -52,8 +52,8 @@ public class Usuario {
 	@Column(nullable = false)
 	@NotNull
 	@NotBlank(message = "Password requerido.")
-	@Size(min = 8, max = 25)
-	@Pattern(regexp="^[a-zA-Z0-9]{8,25}",message="La longitud de la contraseña debe ser minimo 3. Se pemiten mayusculas, minusculas y numeros")
+	//@Size(min = 8)
+	//@Pattern(regexp="^[a-zA-Z0-9]{8,}",message="La longitud de la contraseña debe ser minimo 8. Debe contener mayusculas, minusculas y al menos un numero")
 	private String password;
 	
 	@CreatedDate
