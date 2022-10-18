@@ -16,24 +16,25 @@ public class LoginController {
 	@Autowired
 	UsuarioServicio usuarioServicio;
 	
-	//Redirige la barra al listado de productos
 	@GetMapping("/")
 	public String welcome() {
 		return "redirect:/public/";
 	}
 	
-	//El show del formulario de login
+	//show del formulario de login
+	//el formulario de login y de registro es el mismo
+	//al llamar a Login creamos un nuevo usuario para la parte de "register"
+	
 	@GetMapping("/auth/login")
 	public String login(Model model) {
-		//Es tambien formulario de registro
-		model.addAttribute("usuario", new Usuario());
-		return ("/login/");
+		model.addAttribute("usuario", new Usuario()); //Commandobject
+		return "login";
 	}
 	
-	//PostMapping, no del login, que esta dentro del circuito de seguridad, si no del usuario registrado antes
-	@PostMapping ("/auth/register")
-	public String register (@ModelAttribute Usuario usuario) {
-		usuarioServicio.registrar(usuario);
+	//Le pasamos el usuario creado al registro
+	@PostMapping("/auth/register")
+	public String registro (@ModelAttribute Usuario usuario) { // Inyectamos el usuario
+		if (usuario != null) usuarioServicio.registrar(usuario);
 		return "redirect:/auth/login";
 	}
 
