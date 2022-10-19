@@ -27,7 +27,7 @@ public class SecondHandMarketApplication {
 			usuario = usuarioServicio.registrar(usuario);
 			
 			Usuario usuario2 = new Usuario("Antonio", "García Martín", null, "tonio.garcia@openwebinars.net", "Aa123456789");
-			usuario = usuarioServicio.registrar(usuario2);
+			usuario2 = usuarioServicio.registrar(usuario2);
 			
 			List<Producto> listado = Arrays.asList(
 					new Producto("Bicicleta de montaña", 100.0f,"https://www.decathlon.es/media/835/8350582/big_23c25284-2810-415d-8bcc-e6bebdb536fc.jpg", usuario),
