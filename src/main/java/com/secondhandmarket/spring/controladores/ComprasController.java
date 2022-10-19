@@ -105,4 +105,46 @@ public class ComprasController {
 			return "redirect:/app/carrito";
 		}
 	
+		/**
+		 * Checkout del carrito: en ruta carrito/finalizar. si es nulo ir a listado de productos.
+		 *si no cogemos el listado deproductos insertamos en una nueva compra y 
+		 *asignamos a cada producto la compra en la que estan. Eliminamos carrito 
+		 *y nos redirigimos a la factura+id */
+		@GetMapping("/carrito/finalizar")
+		public String checkout() {
+			List<Long> contenido = (List<Long>) session.getAttribute("carrito");
+			if(contenido == null) return "redirect:/public";
+			List<Producto> productos = productosCarrito();
+			Compra c = compraServicio.insertar(new Compra(), usuario);
+			productos.forEach(p->compraServicio.addProductoCompra(p, c));
+			session.removeAttribute("carrito");
+			return "redirect:/app/compra/factura/"+c.getId();
+		}
+
+		
+		/**
+		 * Una factura en base al id, tendrá que Buscar la compra , sacar la factura de esa compra
+		 * y mostrar el listado de esos productos con el precio de cada uno y el precio total.
+		 * asignamos al modelo y nos redirigimos a la vista factura 
+		 */
+		@GetMapping("/compra/factura/{id}")
+		public String factura(Model model, @PathVariable Long id) {
+			Compra c = compraServicio.buscarPorId(id);
+			List<Producto> productos = productoServicio.productosDeUnaCompra(c);
+			model.addAttribute("productos",productos);
+			model.addAttribute("compra",c);
+			model.addAttribute("total_compra",productos.stream().mapToDouble(p-> p.getPrecio()).sum());
+			return "/app/compra/factura";
+		}
+		
+		
+		/**
+		 * Mis compras: Tenemos el modelo mis compras y simplemente tenemos que ir a la plantilla correspondiente
+		 * para verlo
+		 */
+		
+		@GetMapping("/miscompras")
+		public String misCompras(Model model) {
+			return "/app/compra/listado";
+		}
 }
