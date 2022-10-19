@@ -28,7 +28,7 @@ public class ZonaPublicaController {
 
 	@GetMapping({"/","/index"})
 	public String index (Model model, @RequestParam(name = "q", required = false) String query) {
-		if (query != null) 
+		if (query != null) //Si la query es nula tirara de productosSinVender
 			model.addAttribute("productos", productoServicio.buscar(query));
 		return "index";
 	}

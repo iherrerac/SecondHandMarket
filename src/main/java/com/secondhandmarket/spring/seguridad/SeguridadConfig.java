@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -36,14 +37,12 @@ public class SeguridadConfig{
 		
 	}
 	
-	
-	
 	//Configuracion de seguridad HTTP
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	http
           	.authorizeRequests()
-          	.antMatchers("/", "/webjars/**", "/css/**", "/public/**", "/auth/**", "/files/**").permitAll()
+          	.antMatchers("/", "/webjars/**", "/css/**", "/images/**", "/public/**", "/auth/**", "/files/**").permitAll()
           	.anyRequest().authenticated()
           
           
@@ -64,7 +63,7 @@ public class SeguridadConfig{
           	
         .formLogin()
         	.loginPage("/auth/login")
-        	.defaultSuccessUrl("/public/index")
+        	.defaultSuccessUrl("/public/index", true)
         	.loginProcessingUrl("/auth/login-post")//Controlador para manejar el login en vez de dejar un mapeo directo
         	.permitAll()
         	.and()
@@ -75,7 +74,8 @@ public class SeguridadConfig{
     	//Consola H2, no se si necesario para Postgress
     	http
         .csrf().disable()
-        .headers().frameOptions().disable();
+        //.headers().frameOptions().disable();
+    	.headers().frameOptions().sameOrigin();
     	
 
 
@@ -101,4 +101,9 @@ public class SeguridadConfig{
 //        users.createUser(user);
 //        return users;
 //    }
+    
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico");
+    }
 }
