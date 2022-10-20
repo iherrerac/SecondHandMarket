@@ -9,6 +9,7 @@ import com.secondhandmarket.spring.entidades.Compra;
 import com.secondhandmarket.spring.entidades.Producto;
 import com.secondhandmarket.spring.entidades.Usuario;
 import com.secondhandmarket.spring.repositorio.ProductoRepository;
+import com.secondhandmarket.spring.upload.StorageService;
 
 @Service
 public class ProductoServicio {
@@ -16,21 +17,21 @@ public class ProductoServicio {
 	@Autowired
 	ProductoRepository repositorio;
 	
-//	@Autowired
-//	StorageService storageService;
-	
+	@Autowired
+	StorageService storageService;
 	
 	public Producto insertar(Producto p) {
 		return repositorio.save(p);
 	}
 	
 	public void borrar(long id) {
+		Producto p = repositorio.findById(id).orElse(null);
+		if (!p.getImagen().isEmpty()) storageService.delete(p.getImagen());
 		repositorio.deleteById(id);
 	}
 	
 	public void borrar(Producto p) {
-//		if (!p.getImagen().isEmpty())
-//			storageService.delete(p.getImagen());
+		if (!p.getImagen().isEmpty()) storageService.delete(p.getImagen());
 		repositorio.delete(p);
 	}
 	
