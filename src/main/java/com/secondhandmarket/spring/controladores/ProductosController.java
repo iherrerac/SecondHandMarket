@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import com.secondhandmarket.spring.entidades.Producto;
 import com.secondhandmarket.spring.entidades.Usuario;
 import com.secondhandmarket.spring.servicio.ProductoServicio;
 import com.secondhandmarket.spring.servicio.UsuarioServicio;
+import com.secondhandmarket.spring.upload.StorageService;
 
 @Controller
 @RequestMapping("/app")
@@ -27,6 +30,9 @@ public class ProductosController {
 	
 	@Autowired
 	UsuarioServicio usuarioServicio;
+	
+	@Autowired
+	StorageService storageService;
 
 	private Usuario usuario;
 	
@@ -75,7 +81,14 @@ public class ProductosController {
 	 */
 
 	@PostMapping("/producto/nuevo/submit")
-	public String nuevoProducto(@ModelAttribute Producto producto) {
+	public String nuevoProducto(@ModelAttribute Producto producto, @RequestParam ("file") MultipartFile file) {
+		//Imagen producto
+		if (!file.isEmpty()) {
+			String imagen = storageService.store(file);
+			producto.setImagen(MvcUriComponentsBuilder
+					.fromMethodName(FilesController.class, "serveFile", imagen).build().toUriString());
+		}
+		
 		producto.setPropietario(usuario);
 		productoServicio.insertar(producto);
 		return "redirect:/app/misproductos";
